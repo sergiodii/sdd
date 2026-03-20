@@ -2,11 +2,12 @@
 
 ## 1.1 The Problem
 
-Most backend work is repetitive. Studies and industry experience suggest that a large share of effort goes into boilerplate CRUDs and similar scaffolding—work that is tedious yet still demands senior engineers for correctness, security, and maintainability.
+Software development today faces a paradox: **most code is repetitive**, yet it requires highly qualified engineers to write it. CRUDs, validations, entity mappings, repositories — known patterns that consume weeks of work from entire teams.
+
+Meanwhile, AI coding tools are powerful but chaotic. Without structure, developers get inconsistent code, no test coverage guarantee, and no traceability of what was requested versus what was generated.
 
 ```mermaid
-pie showData
-    title Approximate backend engineering effort distribution
+pie title Typical Backend Effort Distribution
     "CRUDs & Boilerplate" : 45
     "Business Rules" : 25
     "External Integrations" : 15
@@ -14,133 +15,160 @@ pie showData
     "Architecture & Design" : 5
 ```
 
-**SSAB targets the “CRUDs & Boilerplate” slice**—the roughly **45%** that can be formalized, contracted, and synthesized—so human effort shifts toward rules, integrations, and architecture.
+SDD attacks the root cause: **there is no formal contract between intent and code**. TDD gives us tests first. BDD gives us behavior first. SDD gives us the **spec first** — and everything else derives from it.
+
+---
 
 ## 1.2 The Concept
 
-**SSAB** stands for **Self-Synthesizing Adaptive Backend**. It is a system where application behavior is not primarily hand-written line by line; instead, it is **generated just-in-time (JIT)** from structured intent and validated contracts, then **promoted** to first-class native code.
+**Spec-Driven Development (SDD)** is a software development methodology where:
 
-Five ideas capture the model:
-
-1. **Code is not written manually** for each repetitive feature path; synthesis replaces copy-paste CRUD factories.
-2. **Generation is JIT**—triggered when a new capability is needed and no native implementation exists yet.
-3. **Everything is validated against contracts**—schemas, policies, and tests bound what the LLM may emit.
-4. **The stack evolves** from a slower, AI-mediated path to **native PHP aligned with DDD** once quality gates pass.
-5. **After promotion, AI steps out** of the request path for that feature type; runtime is deterministic PHP.
+1. A **spec** is written before any code — defining inputs, outputs, errors, side-effects, and test scenarios
+2. **Skills and rules** define architectural constraints that any code (AI or human) must follow
+3. Code is **synthesized** (by AI, by a developer, or both) following the spec and skills
+4. Code is **validated** against the spec's test scenarios
+5. Code is **governed** — a human reviews and approves before production
 
 ```mermaid
-flowchart LR
-    subgraph Input["Input"]
-        NL["Natural-language intent"]
-        SPEC["JSON / YAML spec"]
+graph TB
+    subgraph "The SDD Cycle"
+        SPEC["📋 Write Spec"] --> SKILLS["⚙️ Apply Skills"]
+        SKILLS --> SYNTH["🤖 Synthesize Code"]
+        SYNTH --> VALIDATE["🧪 Validate vs Spec"]
+        VALIDATE -->|Pass| REVIEW["👁️ Human Review"]
+        VALIDATE -->|Fail| SYNTH
+        REVIEW -->|Approve| PROD["🚀 Production"]
+        REVIEW -->|Feedback| SYNTH
+        PROD --> EVOLVE["📈 Spec Evolves"]
+        EVOLVE --> SPEC
     end
 
-    subgraph Motor["SSAB engine"]
-        GW["Gateway"]
-        CACHE["Semantic cache (Redis)"]
-        LLM["LLM + MCP"]
-        SB["Sandbox"]
-    end
-
-    subgraph Output["Output"]
-        PHP["PHP / DDD code"]
-        PR["GitHub pull request"]
-        UT["Generated unit tests"]
-    end
-
-    NL --> GW
-    SPEC --> GW
-    GW --> CACHE
-    CACHE --> LLM
-    LLM --> SB
-    SB --> GW
-    GW --> PHP
-    GW --> PR
-    GW --> UT
+    style SPEC fill:#4A90D9,color:#fff
+    style SKILLS fill:#7B68EE,color:#fff
+    style SYNTH fill:#F5A623,color:#fff
+    style VALIDATE fill:#D0021B,color:#fff
+    style REVIEW fill:#417505,color:#fff
+    style PROD fill:#2D7D2D,color:#fff
 ```
 
-## 1.3 Motivation
+---
 
-### Why not call an LLM on every request?
+## 1.3 SDD in the xDD Family
 
-Wrapping the live API in an LLM is tempting for flexibility, but it clashes with production realities:
-
-| Concern | Typical AI-at-runtime | SSAB |
-|--------|-------------------------|------|
-| **Latency** | Often **2–10 s** per call | **~15 ms** after promotion (native PHP) |
-| **Cost** | Grows **linearly** with every token on every request | AI runs **once per feature type** (cold path), then stops |
-| **Determinism** | Non-deterministic answers, drift across versions | **Static PHP** after promotion; same inputs → same outputs |
-| **Vendor lock-in** | Hard dependency on a provider’s API in the hot path | **Native code** in your repo; provider is a build-time tool |
-
-**SSAB’s answer:** use AI **only until** the feature is expressed as reviewed, merged PHP. After that, traffic is served by your stack—not by the model.
+SDD is not a replacement for TDD, BDD, or DDD. It sits alongside them, addressing a different concern:
 
 ```mermaid
-flowchart TB
-    subgraph AIWrapper["AI wrapper (anti-pattern for hot path)"]
-        R1["Request 1"] --> L1["LLM"]
-        R2["Request 2"] --> L2["LLM"]
-        R3["Request N"] --> LN["LLM"]
+graph TD
+    subgraph "Development Paradigms"
+        TDD["TDD<br/>Test-Driven Development<br/><i>How do I verify it works?</i>"]
+        BDD["BDD<br/>Behavior-Driven Development<br/><i>How should it behave?</i>"]
+        DDD["DDD<br/>Domain-Driven Design<br/><i>How do I model the domain?</i>"]
+        SDD_BOX["SDD<br/>Spec-Driven Development<br/><i>What should it do?</i>"]
     end
 
-    subgraph SSAB["SSAB (promotion model)"]
-        F1["1st request (new feature)"] --> LC["LLM + sandbox + contracts"]
-        LC --> NAT["Native PHP / DDD"]
-        F2["2nd+ requests"] --> NAT
-    end
+    SDD_BOX -->|"Spec contains"| TDD
+    SDD_BOX -->|"Spec describes"| BDD
+    SDD_BOX -->|"Skills enforce"| DDD
+
+    style SDD_BOX fill:#4A90D9,color:#fff
+    style TDD fill:#F5A623,color:#fff
+    style BDD fill:#F5A623,color:#fff
+    style DDD fill:#F5A623,color:#fff
 ```
+
+| Paradigm | Artifact | Drives |
+|----------|----------|--------|
+| **TDD** | Test | Code implementation |
+| **BDD** | User story / Gherkin | Behavior verification |
+| **DDD** | Domain model | Architecture and boundaries |
+| **SDD** | Spec | Everything: code, tests, docs, validation |
+
+SDD **encompasses** TDD: the spec contains test scenarios that become the validation contract. A team using SDD is inherently doing TDD — but with a richer, more complete source of truth.
+
+---
 
 ## 1.4 Core Principles
 
-| ID | Principle | Meaning |
-|----|-------------|---------|
-| **P1** | **Contract-first** | No synthesized code without a prior **contract** (spec, schema, policy). |
-| **P2** | **Human-in-the-loop** | The model **never** promotes code alone; a **pull request** and human review are mandatory. |
-| **P3** | **Progressive enhancement** | The system starts on a slower **AI-mediated** path and becomes **fast native** code organically. |
-| **P4** | **Deterministic output** | After promotion, generated PHP is **static**; repeated builds from the same inputs yield the same artifact. |
-| **P5** | **Evolvable architecture** | Review comments and operational signals **feed back** into skills, rules, and prompts. |
+### P1 — Spec-First
+
+No code exists without a spec. The spec is written before any implementation begins. It defines:
+- What the software receives (input)
+- What the software returns (output)
+- What can go wrong (errors)
+- What changes in the system (side-effects)
+- How to verify it works (test scenarios)
+
+### P2 — Human Governance
+
+AI is a powerful code synthesizer, but it doesn't make decisions. Humans define the constraints (skills/rules) and approve the output. Every piece of code passes through human review before production.
+
+### P3 — Validation Against Contract
+
+Code is not "done" when it compiles or when the developer says so. Code is done when it **passes all test scenarios defined in the spec**. The spec is the contract; the code is the implementation.
+
+### P4 — Tool-Agnostic
+
+SDD is a methodology, not a tool. It works with:
+- A developer reading the spec and writing code manually
+- Cursor with rules referencing the spec
+- A CI/CD pipeline calling an LLM to generate code
+- Any AI coding assistant
+
+The spec is the universal input. The tool is interchangeable.
+
+### P5 — Evolvable
+
+Specs are versioned. When business rules change, the spec is updated. When the spec changes, the code evolves to match. The spec and the code are always in sync because the spec **governs** the code, not the other way around.
+
+---
 
 ## 1.5 Glossary
 
 | Term | Definition |
-|------|------------|
-| **SSAB** | Self-Synthesizing Adaptive Backend—the overall JIT synthesis and promotion system. |
-| **JIT code** | Code produced on demand when a feature is first exercised, not pre-authored for every endpoint. |
-| **Spec** | Machine-readable description (often JSON/YAML) of behavior, entities, and constraints. |
-| **MCP** | Model Context Protocol; structured tools the LLM uses (e.g., schema introspection). |
-| **Skill** | Packaged guidance, patterns, or procedures the engine attaches to generation tasks. |
-| **Shadow code** | Generated PHP kept **off** the main lineage until validated; may receive partial traffic. |
-| **Promotion funnel** | **Cold → Staging → Hot** maturity path from first synthesis to merged native code. |
-| **Cold** | Phase where **AI generates** and validates in sandbox; no trusted native implementation yet. |
-| **Staging** | Phase where **shadow** code is exercised under **partial traffic** and tests/monitoring. |
-| **Hot** | Phase where **100%** of traffic hits **merged native** PHP; AI exits the request path. |
-| **Gateway** | Edge component routing traffic, invoking cache, LLM, or native handlers. |
-| **Feedback loop** | Webhooks and metrics that return human and runtime signals into the next synthesis. |
-| **Semantic cache** | Redis-backed cache keyed by **intent + spec fingerprint**, not just URLs. |
-| **DDD** | Domain-Driven Design; bounded contexts, aggregates, and explicit domain language in PHP. |
+|------|-----------|
+| **SDD** | Spec-Driven Development — the methodology |
+| **Spec** | A Markdown file defining what a piece of software should do: inputs, outputs, errors, side-effects, and test scenarios |
+| **Skill** | An architectural rule or constraint that code must follow (e.g., "always use repository pattern", "never use raw SQL") |
+| **Rule** | Synonym for Skill — a constraint on how code is written |
+| **Synthesis** | The process of generating code from a spec (by AI or human) |
+| **Validation** | Running the code against the spec's test scenarios to verify conformance |
+| **Governance** | Human oversight: reviewing, approving, and providing feedback on synthesized code |
+| **Contract** | The spec as a binding agreement: the code MUST conform to what the spec defines |
+| **Dataset** | Test data used to validate synthesized code against the spec |
+| **Feedback Loop** | The process where human review comments improve future code synthesis |
 
-## 1.6 Roles in the Ecosystem
+---
+
+## 1.6 Roles in SDD
 
 ```mermaid
-flowchart TB
-    PM["Product / PM"]
-    DEV["Backend developer"]
+graph TB
+    PM["👔 Product Manager<br/><i>Defines business rules</i>"]
+    FE["🎨 Frontend Dev<br/><i>Defines API contract</i>"]
+    BE["💻 Backend Dev<br/><i>Defines architecture & security</i>"]
+    AI["🤖 AI / Synthesis Tool<br/><i>Generates code</i>"]
 
-    PM --> SPEC["Spec (what the business needs)"]
-    DEV --> SKILLS["Skills / architecture & security rules"]
-    DEV --> MOCKS["Mocks & tests"]
+    PM -->|"Writes business logic<br/>in natural language"| SPEC["📋 Spec"]
+    FE -->|"Defines input/output<br/>schemas"| SPEC
+    BE -->|"Defines side-effects,<br/>security constraints"| SPEC
+    BE -->|"Writes architectural<br/>rules"| SKILLS["⚙️ Skills"]
 
-    SPEC --> LLM["LLM synthesis"]
-    SKILLS --> LLM
-    MOCKS --> LLM
+    SPEC --> AI
+    SKILLS --> AI
+    AI -->|"Generates code<br/>+ tests"| CODE["📦 Code"]
+    CODE -->|"PR for review"| BE
 
-    LLM --> OUT["PHP / DDD + PR"]
-    OUT --> DEV
+    style PM fill:#4A90D9,color:#fff
+    style FE fill:#F5A623,color:#fff
+    style BE fill:#417505,color:#fff
+    style AI fill:#7B68EE,color:#fff
 ```
 
-| Role | Primary question | Typical artifacts |
-|------|------------------|-------------------|
-| **PM** | **What** should the system do? | Business rules, user journeys, acceptance criteria → **Spec** |
-| **Backend developer** | **Where** do boundaries, security, and quality live? | **Skills**, policies, **mocks**, test harnesses |
-| **LLM** | **How** is the spec turned into code? | Services, repositories, controllers, tests (under contracts) |
+| Role | Responsibility | Deliverable |
+|------|---------------|-------------|
+| **Product Manager** | Defines the **"What"** — business rules in natural language | Spec content (business logic section) |
+| **Frontend Dev** | Defines the **"Interface"** — input/output schemas | Spec content (input/output section) |
+| **Backend Dev** | Defines the **"How"** — architecture, security, constraints | Skills/Rules + review of generated code |
+| **AI / Tool** | Executes the **"Synthesis"** — generates code following spec + skills | Code + tests (submitted as PR) |
 
-**Career shift:** the backend engineer moves from being primarily a **line-by-line code writer** to a **platform engineer / architecture curator**—owning contracts, guardrails, and the promotion funnel while the engine handles repetitive synthesis.
+> In SDD, the Backend Developer evolves from **code writer** to **architecture curator**. They spend less time writing boilerplate and more time designing constraints, reviewing code quality, and ensuring security.

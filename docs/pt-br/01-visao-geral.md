@@ -1,131 +1,124 @@
-# 1. Visão Geral
+# 1. Visão geral
 
-## 1.1 O Problema
+## 1.1 O problema
 
-O desenvolvimento de backend moderno sofre de um paradoxo: **a maior parte do código escrito é repetitiva**, mas exige engenheiros altamente qualificados para escrevê-la. CRUDs, validações, mapeamentos de entidade, repositórios — são padrões conhecidos que consomem semanas de trabalho de times inteiros.
+O desenvolvimento de software hoje vive um paradoxo: **a maior parte do código é repetitiva**, mas exige engenheiros altamente qualificados para escrevê-la. CRUDs, validações, mapeamentos de entidade, repositórios — padrões conhecidos que consomem semanas de trabalho de times inteiros.
+
+Enquanto isso, ferramentas de código com IA são poderosas, porém caóticas. Sem estrutura, desenvolvedores recebem código inconsistente, sem garantia de cobertura de testes e sem rastreabilidade entre o que foi pedido e o que foi gerado.
 
 ```mermaid
-pie title Distribuição Típica de Esforço no Backend
-    "CRUDs e Boilerplate" : 45
-    "Regras de Negócio" : 25
-    "Integrações Externas" : 15
+pie title Distribuição típica de esforço em backend
+    "CRUDs e boilerplate" : 45
+    "Regras de negócio" : 25
+    "Integrações externas" : 15
     "Infraestrutura e DevOps" : 10
-    "Arquitetura e Design" : 5
+    "Arquitetura e design" : 5
 ```
 
-O SSAB ataca diretamente os **45% de boilerplate** e parte significativa das integrações, liberando o dev para focar no que realmente importa: arquitetura, segurança e regras de negócio complexas.
+O SDD ataca a causa raiz: **não há contrato formal entre intenção e código**. O TDD nos dá testes primeiro. O BDD nos dá comportamento primeiro. O SDD nos dá a **spec primeiro** — e todo o resto deriva dela.
 
 ---
 
-## 1.2 O Conceito
+## 1.2 O conceito
 
-O **Self-Synthesizing Adaptive Backend** é um modelo de infraestrutura onde:
+**Spec-Driven Development (SDD)** é uma metodologia de desenvolvimento de software em que:
 
-1. O **código de produção** não é escrito manualmente para cada funcionalidade
-2. É **gerado Just-In-Time** por uma LLM baseada em intenções (prompts de produto)
-3. É **validado por contratos técnicos** (mocks, testes, specs)
-4. **Evolui** de execução lenta (IA) para execução nativa de alta performance (PHP/DDD) de forma automática
-5. A **IA sai do fluxo** após a promoção — o código final é PHP nativo puro
+1. Uma **spec** é escrita antes de qualquer código — definindo entradas, saídas, erros, efeitos colaterais e cenários de teste
+2. **Skills e regras** definem restrições arquiteturais que qualquer código (IA ou humano) deve seguir
+3. O código é **sintetizado** (por IA, por um desenvolvedor ou ambos) seguindo a spec e as skills
+4. O código é **validado** contra os cenários de teste da spec
+5. O código é **governado** — um humano revisa e aprova antes da produção
 
 ```mermaid
 graph TB
-    subgraph "Entrada"
-        I1["Intenção em<br/>linguagem natural"]
-        I2["Spec JSON/YAML<br/>com mocks"]
+    subgraph "Ciclo do SDD"
+        SPEC["📋 Escrever spec"] --> SKILLS["⚙️ Aplicar skills"]
+        SKILLS --> SYNTH["🤖 Sintetizar código"]
+        SYNTH --> VALIDATE["🧪 Validar vs spec"]
+        VALIDATE -->|Passou| REVIEW["👁️ Revisão humana"]
+        VALIDATE -->|Falhou| SYNTH
+        REVIEW -->|Aprovou| PROD["🚀 Produção"]
+        REVIEW -->|Feedback| SYNTH
+        PROD --> EVOLVE["📈 Spec evolui"]
+        EVOLVE --> SPEC
     end
 
-    subgraph "Motor SSAB"
-        M1["Gateway Orquestrador"]
-        M2["Cache Semântico<br/>(Redis)"]
-        M3["LLM + MCP"]
-        M4["Sandbox de<br/>Validação"]
-    end
-
-    subgraph "Saída"
-        O1["Código PHP/DDD<br/>nativo"]
-        O2["PR no GitHub"]
-        O3["Testes Unitários<br/>gerados"]
-    end
-
-    I1 --> M1
-    I2 --> M1
-    M1 --> M2
-    M2 -->|Cache Miss| M3
-    M2 -->|Cache Hit| O1
-    M3 --> M4
-    M4 -->|Aprovado| O1
-    M4 -->|Aprovado| O2
-    M4 -->|Aprovado| O3
-    M4 -->|Falhou| M3
-
-    style M3 fill:#7B68EE,color:#fff
-    style M2 fill:#D94A4A,color:#fff
-    style M4 fill:#F5A623,color:#fff
-    style O1 fill:#417505,color:#fff
+    style SPEC fill:#4A90D9,color:#fff
+    style SKILLS fill:#7B68EE,color:#fff
+    style SYNTH fill:#F5A623,color:#fff
+    style VALIDATE fill:#D0021B,color:#fff
+    style REVIEW fill:#417505,color:#fff
+    style PROD fill:#2D7D2D,color:#fff
 ```
 
 ---
 
-## 1.3 Motivação
+## 1.3 O SDD na família xDD
 
-### Por que não usar a IA diretamente em runtime?
-
-Sistemas que usam LLM como "motor de execução" em cada request sofrem de:
-
-| Problema | Impacto |
-|----------|---------|
-| **Latência** | 2-10s por request vs 15ms nativo |
-| **Custo por token** | Escala linearmente com tráfego |
-| **Não-determinismo** | Mesma entrada pode gerar comportamentos diferentes |
-| **Vendor lock-in** | Backend para se a API da LLM cair |
-
-O SSAB resolve todos esses problemas: a IA é usada **apenas uma vez** por tipo de funcionalidade. Depois disso, é PHP nativo.
+O SDD não substitui TDD, BDD nem DDD. Convive com eles, tratando de outra preocupação:
 
 ```mermaid
-graph LR
-    subgraph "IA-Wrapper (Outros)"
-        A1["Request"] --> A2["LLM"] --> A3["Response"]
-        A4["Request"] --> A5["LLM"] --> A6["Response"]
-        A7["Request"] --> A8["LLM"] --> A9["Response"]
+graph TD
+    subgraph "Paradigmas de desenvolvimento"
+        TDD["TDD<br/>Test-Driven Development<br/><i>Como verifico que funciona?</i>"]
+        BDD["BDD<br/>Behavior-Driven Development<br/><i>Como deve se comportar?</i>"]
+        DDD["DDD<br/>Domain-Driven Design<br/><i>Como modelar o domínio?</i>"]
+        SDD_BOX["SDD<br/>Spec-Driven Development<br/><i>O que deve fazer?</i>"]
     end
 
-    subgraph "SSAB"
-        B1["1ª Request"] --> B2["LLM"] --> B3["Gera PHP"]
-        B4["2ª Request"] --> B5["PHP Nativo"] --> B6["Response"]
-        B7["Nª Request"] --> B8["PHP Nativo"] --> B9["Response"]
-    end
+    SDD_BOX -->|"A spec contém"| TDD
+    SDD_BOX -->|"A spec descreve"| BDD
+    SDD_BOX -->|"As skills impõem"| DDD
 
-    style A2 fill:#D0021B,color:#fff
-    style A5 fill:#D0021B,color:#fff
-    style A8 fill:#D0021B,color:#fff
-    style B2 fill:#F5A623,color:#fff
-    style B5 fill:#417505,color:#fff
-    style B8 fill:#417505,color:#fff
+    style SDD_BOX fill:#4A90D9,color:#fff
+    style TDD fill:#F5A623,color:#fff
+    style BDD fill:#F5A623,color:#fff
+    style DDD fill:#F5A623,color:#fff
 ```
+
+| Paradigma | Artefato | O que impulsiona |
+|-----------|----------|------------------|
+| **TDD** | Teste | Implementação do código |
+| **BDD** | História de usuário / Gherkin | Verificação de comportamento |
+| **DDD** | Modelo de domínio | Arquitetura e limites |
+| **SDD** | Spec | Tudo: código, testes, docs, validação |
+
+O SDD **engloba** o TDD: a spec contém cenários de teste que viram o contrato de validação. Um time que usa SDD está, por natureza, fazendo TDD — mas com uma fonte da verdade mais rica e completa.
 
 ---
 
-## 1.4 Princípios Fundamentais
+## 1.4 Princípios centrais
 
-### P1 — Contract-First (Contrato Primeiro)
+### P1 — Spec primeiro
 
-Nenhum código é gerado sem um contrato prévio. O Dev/PM **obrigatoriamente** define inputs esperados, outputs desejados e side-effects antes da IA tocar em qualquer linha de código.
+Não existe código sem spec. A spec é escrita antes de qualquer implementação. Ela define:
+- O que o software recebe (entrada)
+- O que o software devolve (saída)
+- O que pode dar errado (erros)
+- O que muda no sistema (efeitos colaterais)
+- Como verificar que funciona (cenários de teste)
 
-### P2 — Human-in-the-Loop (Humano no Circuito)
+### P2 — Governança humana
 
-A IA **nunca** promove código para produção sozinha. Todo código gerado passa por code review humano via Pull Request.
+A IA é um sintetizador de código poderoso, mas não toma decisões. Humanos definem as restrições (skills/regras) e aprovam o resultado. Todo código passa por revisão humana antes da produção.
 
-### P3 — Progressive Enhancement (Melhoria Progressiva)
+### P3 — Validação contra o contrato
 
-O sistema começa lento (IA) e se torna rápido (nativo) organicamente. A performance **melhora** com o uso.
+O código não está “pronto” quando compila ou quando o desenvolvedor diz que está. Está pronto quando **passa em todos os cenários de teste definidos na spec**. A spec é o contrato; o código é a implementação.
 
-### P4 — Deterministic Output (Saída Determinística)
+### P4 — Independente de ferramenta
 
-O código gerado é PHP estático. Uma vez promovido, a mesma entrada **sempre** produz a mesma saída. O não-determinismo da LLM fica confinado à fase de geração.
+O SDD é metodologia, não ferramenta. Funciona com:
+- Um desenvolvedor lendo a spec e escrevendo código à mão
+- Cursor com regras que referenciam a spec
+- Um pipeline de CI/CD chamando um LLM para gerar código
+- Qualquer assistente de código com IA
 
-### P5 — Evolvable Architecture (Arquitetura Evolutiva)
+A spec é a entrada universal. A ferramenta é intercambiável.
 
-Comentários de code review retroalimentam a IA. O sistema **aprende** com as correções humanas e melhora a qualidade do código gerado ao longo do tempo.
+### P5 — Evolúvel
+
+As specs são versionadas. Quando as regras de negócio mudam, a spec é atualizada. Quando a spec muda, o código evolui para acompanhar. Spec e código ficam alinhados porque a spec **governa** o código, e não o contrário.
 
 ---
 
@@ -133,51 +126,49 @@ Comentários de code review retroalimentam a IA. O sistema **aprende** com as co
 
 | Termo | Definição |
 |-------|-----------|
-| **SSAB** | Self-Synthesizing Adaptive Backend — a arquitetura proposta |
-| **JIT Code** | Código gerado Just-In-Time pela LLM na primeira chamada |
-| **Spec** | Arquivo JSON/YAML com input, output esperado e side-effects |
-| **MCP** | Model Context Protocol — protocolo que permite à LLM "enxergar" a infraestrutura |
-| **Skill** | Regra de arquitetura/negócio que a LLM deve seguir obrigatoriamente |
-| **Shadow Code** | Código gerado pela IA que ainda não foi aprovado para produção |
-| **Funil de Promoção** | Caminho que o código percorre: Cold → Staging → Hot |
-| **Cold** | Estado inicial — IA gera código pela primeira vez |
-| **Staging** | Estado intermediário — código em sandbox com tráfego parcial |
-| **Hot** | Estado final — código nativo em produção com 100% do tráfego |
-| **Gateway** | Ponto de entrada PHP que orquestra o fluxo |
-| **Feedback Loop** | Ciclo onde comentários humanos retroalimentam a IA |
-| **Cache Semântico** | Redis + Vector DB que identifica intenções já resolvidas |
-| **DDD** | Domain-Driven Design — padrão arquitetural que a IA deve seguir |
+| **SDD** | Spec-Driven Development — a metodologia |
+| **Spec** | Arquivo Markdown que define o que um trecho de software deve fazer: entradas, saídas, erros, efeitos colaterais e cenários de teste |
+| **Skill** | Regra ou restrição arquitetural que o código deve seguir (ex.: “sempre usar repository pattern”, “nunca usar SQL cru”) |
+| **Regra** | Sinônimo de skill — restrição sobre como o código é escrito |
+| **Síntese** | Processo de gerar código a partir de uma spec (por IA ou humano) |
+| **Validação** | Executar o código contra os cenários de teste da spec para verificar conformidade |
+| **Governança** | Supervisão humana: revisar, aprovar e dar feedback sobre o código sintetizado |
+| **Contrato** | A spec como acordo vinculante: o código DEVE obedecer ao que a spec define |
+| **Dataset** | Dados de teste usados para validar o código sintetizado contra a spec |
+| **Ciclo de feedback** | Processo em que comentários da revisão humana melhoram sínteses futuras |
 
 ---
 
-## 1.6 Papéis no Ecossistema
+## 1.6 Papéis no SDD
 
 ```mermaid
 graph TB
-    subgraph "Quem faz o quê"
-        PM["👔 Product Manager"]
-        DEV["💻 Dev Backend"]
-        IA["🤖 LLM (IA)"]
-    end
+    PM["👔 Product Manager<br/><i>Define regras de negócio</i>"]
+    FE["🎨 Dev frontend<br/><i>Define contrato da API</i>"]
+    BE["💻 Dev backend<br/><i>Define arquitetura e segurança</i>"]
+    AI["🤖 IA / ferramenta de síntese<br/><i>Gera código</i>"]
 
-    PM -->|"Define regras de negócio<br/>em linguagem natural"| SPEC["📋 Spec / Contrato"]
-    DEV -->|"Define arquitetura,<br/>interfaces e segurança"| SKILL["⚙️ Skills / Rules"]
-    DEV -->|"Cria datasets de teste<br/>e valida PRs"| TEST["🧪 Mocks / Testes"]
-    SPEC --> IA
-    SKILL --> IA
-    TEST --> IA
-    IA -->|"Gera código PHP/DDD<br/>+ testes unitários"| CODE["📦 Código"]
-    CODE -->|"Abre PR para<br/>revisão humana"| DEV
+    PM -->|"Escreve lógica de negócio<br/>em linguagem natural"| SPEC["📋 Spec"]
+    FE -->|"Define schemas de<br/>entrada/saída"| SPEC
+    BE -->|"Define efeitos colaterais,<br/>restrições de segurança"| SPEC
+    BE -->|"Escreve regras<br/>arquiteturais"| SKILLS["⚙️ Skills"]
+
+    SPEC --> AI
+    SKILLS --> AI
+    AI -->|"Gera código<br/>+ testes"| CODE["📦 Código"]
+    CODE -->|"PR para revisão"| BE
 
     style PM fill:#4A90D9,color:#fff
-    style DEV fill:#417505,color:#fff
-    style IA fill:#7B68EE,color:#fff
+    style FE fill:#F5A623,color:#fff
+    style BE fill:#417505,color:#fff
+    style AI fill:#7B68EE,color:#fff
 ```
 
-| Papel | Responsabilidade Principal | Entregável |
-|-------|---------------------------|------------|
-| **PM / Produto** | Definir o **"O Quê"** (regra de negócio) | Spec em linguagem natural ou JSON |
-| **Dev Backend** | Definir o **"Onde"** (arquitetura e segurança) | Interfaces, Skills, revisão de PR |
-| **LLM (IA)** | Definir o **"Como"** (código) | PR com Service, Repository e testes |
+| Papel | Responsabilidade | Entrega |
+|-------|------------------|---------|
+| **Product Manager** | Define o **“o quê”** — regras de negócio em linguagem natural | Conteúdo da spec (seção de lógica de negócio) |
+| **Dev frontend** | Define a **“interface”** — schemas de entrada/saída | Conteúdo da spec (seções de entrada/saída) |
+| **Dev backend** | Define o **“como”** — arquitetura, segurança, restrições | Skills/regras + revisão do código gerado |
+| **IA / ferramenta** | Executa a **“síntese”** — gera código seguindo spec + skills | Código + testes (submetidos em PR) |
 
-> O Dev Backend evolui de **escritor de código** para **Engenheiro de Plataforma / Curador de Arquitetura**.
+> No SDD, o desenvolvedor backend deixa de ser só **escritor de código** e vira **curador de arquitetura**. Ele gasta menos tempo com boilerplate e mais tempo desenhando restrições, revisando qualidade e garantindo segurança.
