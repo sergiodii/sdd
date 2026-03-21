@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" href="assets/SDD_Logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,13 +21,18 @@
 <section class="hero" style="background-image: url('assets/Hero_OG_Image.png');">
     <nav class="nav">
         <div class="nav-logo"><img src="assets/SDD_Logo.png" alt="SDD" class="nav-logo-img"></div>
+        <div class="lang-switcher" role="group" aria-label="Language">
+            <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="true">EN</button>
+            <button type="button" class="lang-btn" data-set-lang="pt-BR" aria-pressed="false">PT</button>
+            <button type="button" class="lang-btn" data-set-lang="zh-CN" aria-pressed="false">中文</button>
+        </div>
         <div class="nav-links">
-            <a href="#what">What</a>
-            <a href="#principles">Principles</a>
-            <a href="#spec">The Spec</a>
-            <a href="#workflow">Workflow</a>
-            <a href="#comparison">Compare</a>
-            <a href="https://github.com/sergiodii/sdd" class="nav-cta" target="_blank">GitHub</a>
+            <a href="#what" data-i18n="nav.what">What</a>
+            <a href="#principles" data-i18n="nav.principles">Principles</a>
+            <a href="#spec" data-i18n="nav.spec">The Spec</a>
+            <a href="#workflow" data-i18n="nav.workflow">Workflow</a>
+            <a href="#comparison" data-i18n="nav.compare">Compare</a>
+            <a href="https://github.com/sergiodii/sdd" class="nav-cta" target="_blank" data-i18n="nav.github">GitHub</a>
         </div>
         <button class="nav-toggle" aria-label="Menu">
             <span></span><span></span><span></span>
@@ -35,15 +40,15 @@
     </nav>
 
     <div class="hero-content">
-        <div class="hero-badge">A new development paradigm</div>
-        <h1>Write the spec.<br><span class="gradient-text">The code follows.</span></h1>
-        <p class="hero-subtitle">
+        <div class="hero-badge" data-i18n="hero.badge">A new development paradigm</div>
+        <h1><span data-i18n="hero.title1">Write the spec.</span><br><span class="gradient-text" data-i18n="hero.title2">The code follows.</span></h1>
+        <p class="hero-subtitle" data-i18n-html="hero.subtitle">
             <strong>Spec-Driven Development</strong> is a methodology where the spec is the requirement,
             the test contract, and the documentation — all in one file. Before any line of code is written.
         </p>
         <div class="hero-ctas">
-            <a href="#what" class="btn btn-primary">Learn More</a>
-            <a href="https://github.com/sergiodii/sdd" class="btn btn-outline" target="_blank">View on GitHub</a>
+            <a href="#what" class="btn btn-primary" data-i18n="hero.learn">Learn More</a>
+            <a href="https://github.com/sergiodii/sdd" class="btn btn-outline" target="_blank" data-i18n="hero.viewGithub">View on GitHub</a>
         </div>
     </div>
 
@@ -51,38 +56,38 @@
         <div class="flow-diagram">
             <div class="flow-step" data-step="1">
                 <div class="flow-icon">📋</div>
-                <div class="flow-label">Spec</div>
-                <div class="flow-desc">Define intent</div>
+                <div class="flow-label" data-i18n="flow.spec">Spec</div>
+                <div class="flow-desc" data-i18n="flow.intent">Define intent</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step" data-step="2">
                 <div class="flow-icon">⚙️</div>
-                <div class="flow-label">Skills</div>
-                <div class="flow-desc">Set constraints</div>
+                <div class="flow-label" data-i18n="flow.skills">Skills</div>
+                <div class="flow-desc" data-i18n="flow.constraints">Set constraints</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step" data-step="3">
                 <div class="flow-icon">🤖</div>
-                <div class="flow-label">Synthesize</div>
-                <div class="flow-desc">Generate code</div>
+                <div class="flow-label" data-i18n="flow.synthesize">Synthesize</div>
+                <div class="flow-desc" data-i18n="flow.genCode">Generate code</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step" data-step="4">
                 <div class="flow-icon">🧪</div>
-                <div class="flow-label">Validate</div>
-                <div class="flow-desc">Test vs spec</div>
+                <div class="flow-label" data-i18n="flow.validate">Validate</div>
+                <div class="flow-desc" data-i18n="flow.vsSpec">Test vs spec</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step" data-step="5">
                 <div class="flow-icon">👁️</div>
-                <div class="flow-label">Govern</div>
-                <div class="flow-desc">Human review</div>
+                <div class="flow-label" data-i18n="flow.govern">Govern</div>
+                <div class="flow-desc" data-i18n="flow.review">Human review</div>
             </div>
             <div class="flow-arrow">→</div>
             <div class="flow-step" data-step="6">
                 <div class="flow-icon">🚀</div>
-                <div class="flow-label">Ship</div>
-                <div class="flow-desc">Production</div>
+                <div class="flow-label" data-i18n="flow.ship">Ship</div>
+                <div class="flow-desc" data-i18n="flow.prod">Production</div>
             </div>
         </div>
     </div>
@@ -92,47 +97,47 @@
 <section id="what" class="section">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">The Concept</div>
-            <h2>What is SDD?</h2>
-            <p class="section-subtitle">
+            <div class="section-badge" data-i18n="what.badge">The Concept</div>
+            <h2 data-i18n="what.title">What is SDD?</h2>
+            <p class="section-subtitle" data-i18n="what.subtitle">
                 SDD sits alongside TDD, BDD, and DDD as a development paradigm.
                 Each answers a different question.
             </p>
         </div>
 
         <div class="section-image">
-            <img src="assets/Spec-First_Concept.png" alt="Spec-First Concept — a Markdown spec transforming into tests, code, and documentation" loading="lazy">
+            <img src="assets/Spec-First_Concept.png" data-i18n-alt="what.imgAlt" alt="Spec-First Concept — a Markdown spec transforming into tests, code, and documentation" loading="lazy">
         </div>
 
         <div class="paradigm-grid">
             <div class="paradigm-card">
                 <div class="paradigm-name">TDD</div>
-                <div class="paradigm-full">Test-Driven Development</div>
-                <div class="paradigm-question">"How do I verify it works?"</div>
-                <div class="paradigm-artifact">First artifact: <strong>Test</strong></div>
+                <div class="paradigm-full" data-i18n="what.tddFull">Test-Driven Development</div>
+                <div class="paradigm-question" data-i18n="what.tddQ">"How do I verify it works?"</div>
+                <div class="paradigm-artifact" data-i18n-html="what.tddA">First artifact: <strong>Test</strong></div>
             </div>
             <div class="paradigm-card">
                 <div class="paradigm-name">BDD</div>
-                <div class="paradigm-full">Behavior-Driven Development</div>
-                <div class="paradigm-question">"How should it behave?"</div>
-                <div class="paradigm-artifact">First artifact: <strong>Behavior</strong></div>
+                <div class="paradigm-full" data-i18n="what.bddFull">Behavior-Driven Development</div>
+                <div class="paradigm-question" data-i18n="what.bddQ">"How should it behave?"</div>
+                <div class="paradigm-artifact" data-i18n-html="what.bddA">First artifact: <strong>Behavior</strong></div>
             </div>
             <div class="paradigm-card">
                 <div class="paradigm-name">DDD</div>
-                <div class="paradigm-full">Domain-Driven Design</div>
-                <div class="paradigm-question">"How do I model the domain?"</div>
-                <div class="paradigm-artifact">First artifact: <strong>Domain Model</strong></div>
+                <div class="paradigm-full" data-i18n="what.dddFull">Domain-Driven Design</div>
+                <div class="paradigm-question" data-i18n="what.dddQ">"How do I model the domain?"</div>
+                <div class="paradigm-artifact" data-i18n-html="what.dddA">First artifact: <strong>Domain Model</strong></div>
             </div>
             <div class="paradigm-card paradigm-highlight">
                 <div class="paradigm-name">SDD</div>
-                <div class="paradigm-full">Spec-Driven Development</div>
-                <div class="paradigm-question">"What should it do?"</div>
-                <div class="paradigm-artifact">First artifact: <strong>Spec</strong></div>
+                <div class="paradigm-full" data-i18n="what.sddFull">Spec-Driven Development</div>
+                <div class="paradigm-question" data-i18n="what.sddQ">"What should it do?"</div>
+                <div class="paradigm-artifact" data-i18n-html="what.sddA">First artifact: <strong>Spec</strong></div>
             </div>
         </div>
 
         <div class="key-insight">
-            <blockquote>
+            <blockquote data-i18n-html="what.quote">
                 SDD <strong>encompasses</strong> TDD: the spec contains test scenarios.
                 A team using SDD is inherently doing TDD — but with a richer, more accessible source of truth
                 that everyone on the team can read and write.
@@ -145,40 +150,40 @@
 <section class="section section-dark">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">The Problem</div>
-            <h2>Requirements live everywhere<br>except where they should</h2>
+            <div class="section-badge" data-i18n="problem.badge">The Problem</div>
+            <h2><span data-i18n="problem.title">Requirements live everywhere</span><br><span data-i18n="problem.titleBreak">except where they should</span></h2>
         </div>
 
         <div class="section-image">
-            <img src="assets/Traditional_vs_SDD_Before_After.png" alt="Traditional Development vs Spec-Driven Development comparison" loading="lazy">
+            <img src="assets/Traditional_vs_SDD_Before_After.png" data-i18n-alt="problem.imgAlt" alt="Traditional Development vs Spec-Driven Development comparison" loading="lazy">
         </div>
 
         <div class="problem-grid">
             <div class="problem-card problem-bad">
-                <h3>Traditional Development</h3>
+                <h3 data-i18n="problem.tradTitle">Traditional Development</h3>
                 <ul>
-                    <li><span class="icon-x">✗</span> PM describes feature in a meeting</li>
-                    <li><span class="icon-x">✗</span> Dev interprets (differently)</li>
-                    <li><span class="icon-x">✗</span> Frontend assumes API contract</li>
-                    <li><span class="icon-x">✗</span> Backend implements something else</li>
-                    <li><span class="icon-x">✗</span> Tests written after (or never)</li>
-                    <li><span class="icon-x">✗</span> Docs written later (or never)</li>
+                    <li><span class="icon-x">✗</span> <span data-i18n="problem.trad1"></span></li>
+                    <li><span class="icon-x">✗</span> <span data-i18n="problem.trad2"></span></li>
+                    <li><span class="icon-x">✗</span> <span data-i18n="problem.trad3"></span></li>
+                    <li><span class="icon-x">✗</span> <span data-i18n="problem.trad4"></span></li>
+                    <li><span class="icon-x">✗</span> <span data-i18n="problem.trad5"></span></li>
+                    <li><span class="icon-x">✗</span> <span data-i18n="problem.trad6"></span></li>
                 </ul>
-                <div class="problem-result">
+                <div class="problem-result" data-i18n="problem.tradResult">
                     "That's not what I meant."
                 </div>
             </div>
             <div class="problem-card problem-good">
-                <h3>Spec-Driven Development</h3>
+                <h3 data-i18n="problem.sddTitle">Spec-Driven Development</h3>
                 <ul>
-                    <li><span class="icon-check">✓</span> Anyone writes a spec file</li>
-                    <li><span class="icon-check">✓</span> Spec is reviewed in a PR</li>
-                    <li><span class="icon-check">✓</span> Code is synthesized from spec</li>
-                    <li><span class="icon-check">✓</span> Code is validated against spec</li>
-                    <li><span class="icon-check">✓</span> Tests are built into the spec</li>
-                    <li><span class="icon-check">✓</span> The spec <em>is</em> the documentation</li>
+                    <li><span class="icon-check">✓</span> <span data-i18n="problem.sdd1"></span></li>
+                    <li><span class="icon-check">✓</span> <span data-i18n="problem.sdd2"></span></li>
+                    <li><span class="icon-check">✓</span> <span data-i18n="problem.sdd3"></span></li>
+                    <li><span class="icon-check">✓</span> <span data-i18n="problem.sdd4"></span></li>
+                    <li><span class="icon-check">✓</span> <span data-i18n="problem.sdd5"></span></li>
+                    <li><span class="icon-check">✓</span> <span data-i18n-html="problem.sdd6"></span></li>
                 </ul>
-                <div class="problem-result problem-result-good">
+                <div class="problem-result problem-result-good" data-i18n="problem.sddResult">
                     Single source of truth. Always.
                 </div>
             </div>
@@ -190,35 +195,35 @@
 <section id="principles" class="section">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">Foundation</div>
-            <h2>Five Principles</h2>
+            <div class="section-badge" data-i18n="principles.badge">Foundation</div>
+            <h2 data-i18n="principles.title">Five Principles</h2>
         </div>
 
         <div class="principles-grid">
             <div class="principle-card">
                 <div class="principle-number">01</div>
-                <h3>Spec-First</h3>
-                <p>No code exists without a spec. The spec defines inputs, outputs, errors, side-effects, and test scenarios — before any implementation.</p>
+                <h3 data-i18n="principles.p1t">Spec-First</h3>
+                <p data-i18n="principles.p1">No code exists without a spec. The spec defines inputs, outputs, errors, side-effects, and test scenarios — before any implementation.</p>
             </div>
             <div class="principle-card">
                 <div class="principle-number">02</div>
-                <h3>Human Governance</h3>
-                <p>AI synthesizes code, but humans define constraints (skills/rules) and approve the output. Every piece of code passes through human review.</p>
+                <h3 data-i18n="principles.p2t">Human Governance</h3>
+                <p data-i18n="principles.p2">AI synthesizes code, but humans define constraints (skills/rules) and approve the output. Every piece of code passes through human review.</p>
             </div>
             <div class="principle-card">
                 <div class="principle-number">03</div>
-                <h3>Validation Against Contract</h3>
-                <p>Code is done when it passes all test scenarios in the spec — not when the developer says so. The spec is the contract.</p>
+                <h3 data-i18n="principles.p3t">Validation Against Contract</h3>
+                <p data-i18n="principles.p3">Code is done when it passes all test scenarios in the spec — not when the developer says so. The spec is the contract.</p>
             </div>
             <div class="principle-card">
                 <div class="principle-number">04</div>
-                <h3>Tool-Agnostic</h3>
-                <p>SDD works with Cursor, Copilot, CI/CD pipelines, custom engines, or a developer writing code by hand. The spec is the universal input.</p>
+                <h3 data-i18n="principles.p4t">Tool-Agnostic</h3>
+                <p data-i18n="principles.p4">SDD works with Cursor, Copilot, CI/CD pipelines, custom engines, or a developer writing code by hand. The spec is the universal input.</p>
             </div>
             <div class="principle-card">
                 <div class="principle-number">05</div>
-                <h3>Evolvable</h3>
-                <p>Specs are versioned. When business rules change, the spec is updated. The code evolves to match. The spec governs the code, not the other way around.</p>
+                <h3 data-i18n="principles.p5t">Evolvable</h3>
+                <p data-i18n="principles.p5">Specs are versioned. When business rules change, the spec is updated. The code evolves to match. The spec governs the code, not the other way around.</p>
             </div>
         </div>
     </div>
@@ -228,9 +233,9 @@
 <section id="spec" class="section section-dark">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">The Core Artifact</div>
-            <h2>The Spec</h2>
-            <p class="section-subtitle">
+            <div class="section-badge" data-i18n="spec.badge">The Core Artifact</div>
+            <h2 data-i18n="spec.title">The Spec</h2>
+            <p class="section-subtitle" data-i18n="spec.subtitle">
                 A Markdown file that anyone on the team can write.
                 It defines what the software should do, how to test it, and serves as living documentation.
             </p>
@@ -246,7 +251,7 @@
                     </div>
                     <span class="spec-filename">specs/user.md</span>
                 </div>
-                <pre class="spec-code"><code><span class="code-heading"># POST /user</span>
+                <pre class="spec-code"><code id="spec-code-content"><span class="code-heading"># POST /user</span>
 
 <span class="code-heading">## Auth</span>
 None
@@ -287,18 +292,18 @@ hashes password with bcrypt, returns JWT.
             <div class="spec-annotations">
                 <div class="annotation" data-label="Requirement">
                     <div class="annotation-icon">📝</div>
-                    <h4>It's the Requirement</h4>
-                    <p>What the endpoint does, what it receives, what it returns. No ambiguity.</p>
+                    <h4 data-i18n="spec.ann1t">It's the Requirement</h4>
+                    <p data-i18n="spec.ann1">What the endpoint does, what it receives, what it returns. No ambiguity.</p>
                 </div>
                 <div class="annotation" data-label="Test Suite">
                     <div class="annotation-icon">🧪</div>
-                    <h4>It's the Test Suite</h4>
-                    <p>Scenarios with input, expected output, and database assertions. Executable contracts.</p>
+                    <h4 data-i18n="spec.ann2t">It's the Test Suite</h4>
+                    <p data-i18n="spec.ann2">Scenarios with input, expected output, and database assertions. Executable contracts.</p>
                 </div>
                 <div class="annotation" data-label="Documentation">
                     <div class="annotation-icon">📖</div>
-                    <h4>It's the Documentation</h4>
-                    <p>Always up to date. If the spec changes, the code must change. It can never be outdated.</p>
+                    <h4 data-i18n="spec.ann3t">It's the Documentation</h4>
+                    <p data-i18n="spec.ann3">Always up to date. If the spec changes, the code must change. It can never be outdated.</p>
                 </div>
             </div>
         </div>
@@ -309,72 +314,72 @@ hashes password with bcrypt, returns JWT.
 <section class="section">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">Guardrails</div>
-            <h2>Skills & Rules</h2>
-            <p class="section-subtitle">
+            <div class="section-badge" data-i18n="skills.badge">Guardrails</div>
+            <h2 data-i18n="skills.title">Skills & Rules</h2>
+            <p class="section-subtitle" data-i18n-html="skills.subtitle">
                 Specs define <strong>what</strong> to build. Skills define <strong>how</strong> to build it.
                 Architectural constraints that every piece of code must follow.
             </p>
         </div>
 
         <div class="section-image">
-            <img src="assets/Skills_Rules_Guardrails.png" alt="Skills and Rules acting as guardrails for code generation" loading="lazy">
+            <img src="assets/Skills_Rules_Guardrails.png" data-i18n-alt="skills.imgAlt" alt="Skills and Rules acting as guardrails for code generation" loading="lazy">
         </div>
 
         <div class="skills-grid">
             <div class="skill-card">
                 <div class="skill-icon">🏗️</div>
-                <h3>Architecture</h3>
-                <p>"Every endpoint must follow DDD: Handler → Service → Repository"</p>
+                <h3 data-i18n="skills.arch">Architecture</h3>
+                <p data-i18n="skills.archQ">"Every endpoint must follow DDD: Handler → Service → Repository"</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">🔒</div>
-                <h3>Security</h3>
-                <p>"Never use raw SQL. Always use parameterized queries. Bcrypt cost 12 minimum."</p>
+                <h3 data-i18n="skills.sec">Security</h3>
+                <p data-i18n="skills.secQ">"Never use raw SQL. Always use parameterized queries. Bcrypt cost 12 minimum."</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">✅</div>
-                <h3>Validation</h3>
-                <p>"Always validate and sanitize all user input. Never trust the client."</p>
+                <h3 data-i18n="skills.val">Validation</h3>
+                <p data-i18n="skills.valQ">"Always validate and sanitize all user input. Never trust the client."</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">📦</div>
-                <h3>Dependencies</h3>
-                <p>"All dependencies injected via constructor. Never instantiate directly."</p>
+                <h3 data-i18n="skills.dep">Dependencies</h3>
+                <p data-i18n="skills.depQ">"All dependencies injected via constructor. Never instantiate directly."</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">🧪</div>
-                <h3>Testing</h3>
-                <p>"Generate unit tests for every service. Edge cases must be covered."</p>
+                <h3 data-i18n="skills.test">Testing</h3>
+                <p data-i18n="skills.testQ">"Generate unit tests for every service. Edge cases must be covered."</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">📛</div>
-                <h3>Naming</h3>
-                <p>"Use language conventions. Interfaces don't have I prefix. Constructors are New*."</p>
+                <h3 data-i18n="skills.nam">Naming</h3>
+                <p data-i18n="skills.namQ">"Use language conventions. Interfaces don't have I prefix. Constructors are New*."</p>
             </div>
         </div>
 
         <div class="skills-portable">
-            <h3>Skills are portable</h3>
+            <h3 data-i18n="skills.portable">Skills are portable</h3>
             <div class="portable-grid">
                 <div class="portable-item">
-                    <strong>Cursor</strong>
-                    <span>→ .cursor/rules/</span>
+                    <strong data-i18n="skills.cursor">Cursor</strong>
+                    <span data-i18n="skills.cursorPath">→ .cursor/rules/</span>
                 </div>
                 <div class="portable-item">
-                    <strong>CI/CD</strong>
-                    <span>→ LLM system prompt</span>
+                    <strong data-i18n="skills.cicd">CI/CD</strong>
+                    <span data-i18n="skills.cicdPath">→ LLM system prompt</span>
                 </div>
                 <div class="portable-item">
-                    <strong>Copilot</strong>
-                    <span>→ instructions.md</span>
+                    <strong data-i18n="skills.copilot">Copilot</strong>
+                    <span data-i18n="skills.copilotPath">→ instructions.md</span>
                 </div>
                 <div class="portable-item">
-                    <strong>Manual</strong>
-                    <span>→ coding standards</span>
+                    <strong data-i18n="skills.manual">Manual</strong>
+                    <span data-i18n="skills.manualPath">→ coding standards</span>
                 </div>
             </div>
-            <p class="portable-note">Write once, use everywhere. Skills are Markdown files — not tied to any tool.</p>
+            <p class="portable-note" data-i18n="skills.note">Write once, use everywhere. Skills are Markdown files — not tied to any tool.</p>
         </div>
     </div>
 </section>
@@ -383,61 +388,61 @@ hashes password with bcrypt, returns JWT.
 <section id="workflow" class="section section-dark">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">Process</div>
-            <h2>The Workflow</h2>
+            <div class="section-badge" data-i18n="workflow.badge">Process</div>
+            <h2 data-i18n="workflow.title">The Workflow</h2>
         </div>
 
         <div class="section-image">
-            <img src="assets/The_Workflow_Pipeline.png" alt="The SDD workflow pipeline — from spec to production" loading="lazy">
+            <img src="assets/The_Workflow_Pipeline.png" data-i18n-alt="workflow.imgAlt" alt="The SDD workflow pipeline — from spec to production" loading="lazy">
         </div>
 
         <div class="workflow-steps">
             <div class="workflow-step">
                 <div class="step-number">1</div>
                 <div class="step-content">
-                    <h3>Write the Spec</h3>
-                    <p>PM, frontend dev, or backend dev writes a Markdown file defining the feature: inputs, outputs, errors, side-effects, and test scenarios.</p>
-                    <div class="step-who">Who: Anyone on the team</div>
+                    <h3 data-i18n="workflow.s1t">Write the Spec</h3>
+                    <p data-i18n="workflow.s1">PM, frontend dev, or backend dev writes a Markdown file defining the feature: inputs, outputs, errors, side-effects, and test scenarios.</p>
+                    <div class="step-who" data-i18n="workflow.s1w">Who: Anyone on the team</div>
                 </div>
             </div>
             <div class="workflow-step">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                    <h3>Review the Spec</h3>
-                    <p>The spec is reviewed in a Pull Request, just like code. The team verifies business rules, edge cases, and API contracts.</p>
-                    <div class="step-who">Who: The team (via PR)</div>
+                    <h3 data-i18n="workflow.s2t">Review the Spec</h3>
+                    <p data-i18n="workflow.s2">The spec is reviewed in a Pull Request, just like code. The team verifies business rules, edge cases, and API contracts.</p>
+                    <div class="step-who" data-i18n="workflow.s2w">Who: The team (via PR)</div>
                 </div>
             </div>
             <div class="workflow-step">
                 <div class="step-number">3</div>
                 <div class="step-content">
-                    <h3>Synthesize Code</h3>
-                    <p>Code is generated following the spec and skills. By Cursor, by a CI/CD pipeline calling an LLM, or by a developer writing by hand.</p>
-                    <div class="step-who">Who: AI tool or developer</div>
+                    <h3 data-i18n="workflow.s3t">Synthesize Code</h3>
+                    <p data-i18n="workflow.s3">Code is generated following the spec and skills. By Cursor, by a CI/CD pipeline calling an LLM, or by a developer writing by hand.</p>
+                    <div class="step-who" data-i18n="workflow.s3w">Who: AI tool or developer</div>
                 </div>
             </div>
             <div class="workflow-step">
                 <div class="step-number">4</div>
                 <div class="step-content">
-                    <h3>Validate Against Spec</h3>
-                    <p>The code is executed against the spec's test scenarios. If the output matches the expected contract, the code is valid.</p>
-                    <div class="step-who">Who: Automated tests</div>
+                    <h3 data-i18n="workflow.s4t">Validate Against Spec</h3>
+                    <p data-i18n="workflow.s4">The code is executed against the spec's test scenarios. If the output matches the expected contract, the code is valid.</p>
+                    <div class="step-who" data-i18n="workflow.s4w">Who: Automated tests</div>
                 </div>
             </div>
             <div class="workflow-step">
                 <div class="step-number">5</div>
                 <div class="step-content">
-                    <h3>Human Review</h3>
-                    <p>A developer reviews the code for logic, security, and architecture. Feedback feeds back into the synthesis for correction.</p>
-                    <div class="step-who">Who: Backend dev / Tech lead</div>
+                    <h3 data-i18n="workflow.s5t">Human Review</h3>
+                    <p data-i18n="workflow.s5">A developer reviews the code for logic, security, and architecture. Feedback feeds back into the synthesis for correction.</p>
+                    <div class="step-who" data-i18n="workflow.s5w">Who: Backend dev / Tech lead</div>
                 </div>
             </div>
             <div class="workflow-step">
                 <div class="step-number">6</div>
                 <div class="step-content">
-                    <h3>Ship to Production</h3>
-                    <p>Approved code is merged and deployed. The spec remains as living documentation. When the spec changes, the cycle restarts.</p>
-                    <div class="step-who">Who: CI/CD pipeline</div>
+                    <h3 data-i18n="workflow.s6t">Ship to Production</h3>
+                    <p data-i18n="workflow.s6">Approved code is merged and deployed. The spec remains as living documentation. When the spec changes, the cycle restarts.</p>
+                    <div class="step-who" data-i18n="workflow.s6w">Who: CI/CD pipeline</div>
                 </div>
             </div>
         </div>
@@ -448,33 +453,33 @@ hashes password with bcrypt, returns JWT.
 <section class="section">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">Roles</div>
-            <h2>Who Does What</h2>
-            <p class="section-subtitle">SDD democratizes feature definition. Everyone contributes at their level of expertise.</p>
+            <div class="section-badge" data-i18n="roles.badge">Roles</div>
+            <h2 data-i18n="roles.title">Who Does What</h2>
+            <p class="section-subtitle" data-i18n="roles.subtitle">SDD democratizes feature definition. Everyone contributes at their level of expertise.</p>
         </div>
 
         <div class="section-image">
-            <img src="assets/Who_Does_What_Roles.png" alt="Who does what — PM, Frontend, and Backend roles in SDD" loading="lazy">
+            <img src="assets/Who_Does_What_Roles.png" data-i18n-alt="roles.imgAlt" alt="Who does what — PM, Frontend, and Backend roles in SDD" loading="lazy">
         </div>
 
         <div class="roles-grid">
             <div class="role-card">
                 <div class="role-icon">👔</div>
-                <h3>Product Manager</h3>
-                <p class="role-does">Defines the <strong>"What"</strong></p>
-                <p>Writes business rules in natural language. "When the user registers, return a token. If the email exists, return an error."</p>
+                <h3 data-i18n="roles.pm">Product Manager</h3>
+                <p class="role-does" data-i18n-html="roles.pmDoes">Defines the <strong>"What"</strong></p>
+                <p data-i18n="roles.pmText">Writes business rules in natural language. "When the user registers, return a token. If the email exists, return an error."</p>
             </div>
             <div class="role-card">
                 <div class="role-icon">🎨</div>
-                <h3>Frontend Dev</h3>
-                <p class="role-does">Defines the <strong>"Interface"</strong></p>
-                <p>Defines input/output schemas. What the API receives and returns. Error codes the UI needs to handle.</p>
+                <h3 data-i18n="roles.fe">Frontend Dev</h3>
+                <p class="role-does" data-i18n-html="roles.feDoes">Defines the <strong>"Interface"</strong></p>
+                <p data-i18n="roles.feText">Defines input/output schemas. What the API receives and returns. Error codes the UI needs to handle.</p>
             </div>
             <div class="role-card">
                 <div class="role-icon">💻</div>
-                <h3>Backend Dev</h3>
-                <p class="role-does">Defines the <strong>"How"</strong></p>
-                <p>Writes skills/rules, defines security constraints, reviews generated code. Evolves from code writer to architecture curator.</p>
+                <h3 data-i18n="roles.be">Backend Dev</h3>
+                <p class="role-does" data-i18n-html="roles.beDoes">Defines the <strong>"How"</strong></p>
+                <p data-i18n="roles.beText">Writes skills/rules, defines security constraints, reviews generated code. Evolves from code writer to architecture curator.</p>
             </div>
         </div>
     </div>
@@ -484,49 +489,49 @@ hashes password with bcrypt, returns JWT.
 <section id="comparison" class="section section-dark">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">Analysis</div>
-            <h2>Why SDD?</h2>
+            <div class="section-badge" data-i18n="compare.badge">Analysis</div>
+            <h2 data-i18n="compare.title">Why SDD?</h2>
         </div>
 
         <div class="comparison-table-wrapper">
             <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th>Aspect</th>
-                        <th>Traditional</th>
-                        <th class="highlight-col">SDD</th>
+                        <th data-i18n="compare.thAspect">Aspect</th>
+                        <th data-i18n="compare.thTrad">Traditional</th>
+                        <th class="highlight-col" data-i18n="compare.thSdd">SDD</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Requirements</td>
-                        <td>Jira tickets, meetings, Slack</td>
-                        <td class="highlight-col">Spec file in the repo</td>
+                        <td data-i18n="compare.r1a">Requirements</td>
+                        <td data-i18n="compare.r1t">Jira tickets, meetings, Slack</td>
+                        <td class="highlight-col" data-i18n="compare.r1s">Spec file in the repo</td>
                     </tr>
                     <tr>
-                        <td>Tests</td>
-                        <td>Written after code (or never)</td>
-                        <td class="highlight-col">Defined before code (in the spec)</td>
+                        <td data-i18n="compare.r2a">Tests</td>
+                        <td data-i18n="compare.r2t">Written after code (or never)</td>
+                        <td class="highlight-col" data-i18n="compare.r2s">Defined before code (in the spec)</td>
                     </tr>
                     <tr>
-                        <td>Documentation</td>
-                        <td>Separate doc (usually outdated)</td>
-                        <td class="highlight-col">The spec IS the documentation</td>
+                        <td data-i18n="compare.r3a">Documentation</td>
+                        <td data-i18n="compare.r3t">Separate doc (usually outdated)</td>
+                        <td class="highlight-col" data-i18n="compare.r3s">The spec IS the documentation</td>
                     </tr>
                     <tr>
-                        <td>Consistency</td>
-                        <td>Depends on the developer</td>
-                        <td class="highlight-col">Enforced by skills</td>
+                        <td data-i18n="compare.r4a">Consistency</td>
+                        <td data-i18n="compare.r4t">Depends on the developer</td>
+                        <td class="highlight-col" data-i18n="compare.r4s">Enforced by skills</td>
                     </tr>
                     <tr>
-                        <td>Traceability</td>
-                        <td>Check Slack / memory</td>
-                        <td class="highlight-col">Git blame on spec file</td>
+                        <td data-i18n="compare.r5a">Traceability</td>
+                        <td data-i18n="compare.r5t">Check Slack / memory</td>
+                        <td class="highlight-col" data-i18n="compare.r5s">Git blame on spec file</td>
                     </tr>
                     <tr>
-                        <td>Onboarding</td>
-                        <td>"Read the code"</td>
-                        <td class="highlight-col">"Read the specs"</td>
+                        <td data-i18n="compare.r6a">Onboarding</td>
+                        <td data-i18n="compare.r6t">"Read the code"</td>
+                        <td class="highlight-col" data-i18n="compare.r6s">"Read the specs"</td>
                     </tr>
                 </tbody>
             </table>
@@ -535,18 +540,18 @@ hashes password with bcrypt, returns JWT.
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-number">3x</div>
-                <div class="stat-label">Faster feature definition</div>
-                <div class="stat-desc">Spec replaces meetings + Jira + Confluence</div>
+                <div class="stat-label" data-i18n="compare.stat1l">Faster feature definition</div>
+                <div class="stat-desc" data-i18n="compare.stat1d">Spec replaces meetings + Jira + Confluence</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">100%</div>
-                <div class="stat-label">Test coverage guaranteed</div>
-                <div class="stat-desc">No code without test scenarios in the spec</div>
+                <div class="stat-label" data-i18n="compare.stat2l">Test coverage guaranteed</div>
+                <div class="stat-desc" data-i18n="compare.stat2d">No code without test scenarios in the spec</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">0%</div>
-                <div class="stat-label">Outdated documentation</div>
-                <div class="stat-desc">The spec IS the doc — always in sync</div>
+                <div class="stat-label" data-i18n="compare.stat3l">Outdated documentation</div>
+                <div class="stat-desc" data-i18n="compare.stat3d">The spec IS the doc — always in sync</div>
             </div>
         </div>
     </div>
@@ -556,35 +561,35 @@ hashes password with bcrypt, returns JWT.
 <section class="section">
     <div class="container">
         <div class="section-header">
-            <div class="section-badge">Start Now</div>
-            <h2>Adopt SDD in 30 Minutes</h2>
+            <div class="section-badge" data-i18n="start.badge">Start Now</div>
+            <h2 data-i18n="start.title">Adopt SDD in 30 Minutes</h2>
         </div>
 
         <div class="getting-started">
             <div class="gs-step">
                 <div class="gs-number">1</div>
                 <div class="gs-code">mkdir -p .sdd/specs .sdd/skills</div>
-                <p>Create the SDD structure in your project</p>
+                <p data-i18n="start.g1">Create the SDD structure in your project</p>
             </div>
             <div class="gs-step">
                 <div class="gs-number">2</div>
                 <div class="gs-code">Write your first spec in .sdd/specs/user.md</div>
-                <p>Define inputs, outputs, errors, and test scenarios</p>
+                <p data-i18n="start.g2">Define inputs, outputs, errors, and test scenarios</p>
             </div>
             <div class="gs-step">
                 <div class="gs-number">3</div>
                 <div class="gs-code">Write 2-3 skills in .sdd/skills/</div>
-                <p>Codify your architecture decisions and security rules</p>
+                <p data-i18n="start.g3">Codify your architecture decisions and security rules</p>
             </div>
             <div class="gs-step">
                 <div class="gs-number">4</div>
                 <div class="gs-code">Develop following the spec</div>
-                <p>With AI tools or by hand — the spec is the universal input</p>
+                <p data-i18n="start.g4">With AI tools or by hand — the spec is the universal input</p>
             </div>
             <div class="gs-step">
                 <div class="gs-number">5</div>
                 <div class="gs-code">Validate: does the code match the spec?</div>
-                <p>Run test scenarios. If they pass, you're done.</p>
+                <p data-i18n="start.g5">Run test scenarios. If they pass, you're done.</p>
             </div>
         </div>
     </div>
@@ -596,28 +601,28 @@ hashes password with bcrypt, returns JWT.
         <div class="footer-content">
             <div class="footer-brand">
                 <div class="footer-logo"><img src="assets/SDD_Logo.png" alt="SDD" class="footer-logo-img"></div>
-                <p>Spec-Driven Development</p>
-                <p class="footer-tagline">Write the spec. The code follows.</p>
+                <p data-i18n="footer.brand">Spec-Driven Development</p>
+                <p class="footer-tagline" data-i18n="footer.tagline">Write the spec. The code follows.</p>
             </div>
             <div class="footer-links">
-                <h4>Documentation</h4>
-                <a href="https://github.com/sergiodii/sdd/blob/main/docs/en/01-overview.md">Overview</a>
-                <a href="https://github.com/sergiodii/sdd/blob/main/docs/en/02-the-spec.md">The Spec</a>
-                <a href="https://github.com/sergiodii/sdd/blob/main/docs/en/03-skills-and-rules.md">Skills & Rules</a>
-                <a href="https://github.com/sergiodii/sdd/blob/main/docs/en/07-comparative-analysis.md">Comparative Analysis</a>
+                <h4 data-i18n="footer.docs">Documentation</h4>
+                <a data-doc="overview" href="https://github.com/sergiodii/sdd/blob/main/docs/en/01-overview.md" data-i18n="footer.overview">Overview</a>
+                <a data-doc="spec" href="https://github.com/sergiodii/sdd/blob/main/docs/en/02-the-spec.md" data-i18n="footer.theSpec">The Spec</a>
+                <a data-doc="skills" href="https://github.com/sergiodii/sdd/blob/main/docs/en/03-skills-and-rules.md" data-i18n="footer.skillsRules">Skills & Rules</a>
+                <a data-doc="comp" href="https://github.com/sergiodii/sdd/blob/main/docs/en/07-comparative-analysis.md" data-i18n="footer.comp">Comparative Analysis</a>
             </div>
             <div class="footer-links">
-                <h4>Implementations</h4>
+                <h4 data-i18n="footer.impl">Implementations</h4>
                 <a href="https://vstate.dogether.com.br/">vState</a>
-                <a href="https://github.com/sergiodii/sdd/blob/main/docs/en/06-implementations.md">All Implementations</a>
+                <a data-doc="impl" href="https://github.com/sergiodii/sdd/blob/main/docs/en/06-implementations.md" data-i18n="footer.allImpl">All Implementations</a>
             </div>
             <div class="footer-links">
-                <h4>Connect</h4>
-                <a href="https://github.com/sergiodii/sdd">GitHub</a>
+                <h4 data-i18n="footer.connect">Connect</h4>
+                <a href="https://github.com/sergiodii/sdd" data-i18n="nav.github">GitHub</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>
+            <p data-i18n="footer.quote">
                 "TDD says: write the test first. SDD says: write the spec first —
                 the test, the doc, and the contract are all the same thing."
             </p>
@@ -625,6 +630,7 @@ hashes password with bcrypt, returns JWT.
     </div>
 </footer>
 
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

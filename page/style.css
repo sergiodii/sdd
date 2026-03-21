@@ -57,7 +57,7 @@ body {
     letter-spacing: -0.03em;
 }
 
-.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links { display: flex; gap: 32px; align-items: center; flex: 1; justify-content: flex-end; }
 .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
@@ -73,6 +73,45 @@ body {
     padding: 8px 20px;
     border-radius: 8px;
     font-weight: 600 !important;
+}
+
+/* Language switcher */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(26, 26, 46, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+.lang-btn {
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-muted);
+    transition: color 0.2s, background 0.2s;
+}
+.lang-btn:hover { color: var(--text); background: var(--surface-hover); }
+.lang-btn--active {
+    background: var(--primary-glow);
+    color: var(--primary-light);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+body.lang-zh {
+    font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+body.lang-zh .spec-code,
+body.lang-zh .gs-code,
+body.lang-zh .spec-filename {
+    font-family: 'JetBrains Mono', 'Noto Sans SC', monospace;
 }
 
 .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
@@ -686,10 +725,12 @@ body {
 /* --- Tablet Portrait (≤768px) --- */
 @media (max-width: 768px) {
     /* Nav */
-    .nav { padding: 14px 16px; }
+    .nav { padding: 14px 16px; flex-wrap: wrap; row-gap: 10px; }
     .nav-links { display: none; }
     .nav-toggle { display: block; }
     .nav-logo-img { height: 30px; }
+    .lang-switcher { gap: 2px; padding: 2px; }
+    .lang-btn { padding: 5px 7px; font-size: 0.65rem; }
 
     /* Hero */
     .hero { padding: 90px 16px 40px; min-height: auto; }
