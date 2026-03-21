@@ -3,7 +3,7 @@ const SDD_LANGS = ['en', 'pt-BR', 'zh-CN'];
 
 function getBundle(lang) {
     const dict = window.SDD_I18N || {};
-    return dict[lang] || dict.en;
+    return dict[lang] || dict.en || {};
 }
 
 function pick(obj, path) {
@@ -35,13 +35,13 @@ function applyLanguage(lang) {
     });
 
     const specCodeEl = document.getElementById('spec-code-content');
-    if (specCodeEl && b.specCode) specCodeEl.innerHTML = b.specCode;
+    if (specCodeEl && b?.specCode) specCodeEl.innerHTML = b.specCode;
 
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc && b.meta?.description) metaDesc.setAttribute('content', b.meta.description);
+    if (metaDesc && b?.meta?.description) metaDesc.setAttribute('content', b.meta.description);
     const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc && b.meta?.ogDescription) ogDesc.setAttribute('content', b.meta.ogDescription);
-    if (b.meta?.title) {
+    if (ogDesc && b?.meta?.ogDescription) ogDesc.setAttribute('content', b.meta.ogDescription);
+    if (b?.meta?.title) {
         document.title = b.meta.title;
         const ogTitle = document.querySelector('meta[property="og:title"]');
         if (ogTitle) ogTitle.setAttribute('content', b.meta.title);
@@ -49,7 +49,7 @@ function applyLanguage(lang) {
 
     document.querySelectorAll('a[data-doc]').forEach((a) => {
         const doc = a.getAttribute('data-doc');
-        if (b.docsBase && b.docFiles && b.docFiles[doc]) {
+        if (b?.docsBase && b?.docFiles && b.docFiles[doc]) {
             a.href = b.docsBase + b.docFiles[doc];
         }
     });
@@ -81,10 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navLang.startsWith('zh')) return 'zh-CN';
         return 'en';
     })();
-    applyLanguage(initialLang);
+    try {
+        applyLanguage(initialLang);
+    } catch (err) {
+        console.error('[SDD i18n] applyLanguage failed:', err);
+    }
 
     document.querySelectorAll('[data-set-lang]').forEach((btn) => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             applyLanguage(btn.getAttribute('data-set-lang'));
         });
     });

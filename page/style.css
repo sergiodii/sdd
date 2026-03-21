@@ -37,7 +37,8 @@ body {
 .nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 16px;
     padding: 20px 40px;
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -57,7 +58,8 @@ body {
     letter-spacing: -0.03em;
 }
 
-.nav-links { display: flex; gap: 32px; align-items: center; flex: 1; justify-content: flex-end; }
+/* margin-left: auto keeps links on the right without a wide hit-box over the language switcher */
+.nav-links { display: flex; gap: 32px; align-items: center; margin-left: auto; }
 .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
@@ -727,7 +729,7 @@ body.lang-zh .spec-filename {
     /* Nav */
     .nav { padding: 14px 16px; flex-wrap: wrap; row-gap: 10px; }
     .nav-links { display: none; }
-    .nav-toggle { display: block; }
+    .nav-toggle { display: block; margin-left: auto; }
     .nav-logo-img { height: 30px; }
     .lang-switcher { gap: 2px; padding: 2px; }
     .lang-btn { padding: 5px 7px; font-size: 0.65rem; }
